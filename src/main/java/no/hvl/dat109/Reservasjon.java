@@ -14,13 +14,14 @@ public class Reservasjon {
 	private double pris;
 	private long kredittkort;
 	private Faktura faktura;
+	private double kmFor;
+	private double kmEtter;
 	
 	private static double gebyr = 500;
 
 
 public Reservasjon(UtleigeKontor leiested, UtleigeKontor retursted, LocalDateTime ut_dato, LocalDateTime inn_dato,
 			int antallDager, Bil bil, double pris, long kredittkort) {
-		super();
 		this.leiested = leiested;
 		this.retursted = retursted;
 		this.ut_dato = ut_dato;
@@ -29,18 +30,24 @@ public Reservasjon(UtleigeKontor leiested, UtleigeKontor retursted, LocalDateTim
 		this.bil = bil;
 		this.pris = pris;
 		this.kredittkort = kredittkort;
+		kmFor = bil.getKm();
+		bil.setLedig(false);
 	}
 
 
 
 	public void fakturer() {
+		kmEtter = bil.getKm();
 		double fakturagebyr = gebyr;
 		if (leiested.equals(retursted)) {fakturagebyr = 0;} 
 			
 		Date forfallsDato = Timestamp.valueOf(inn_dato.plusDays(14));
+		
 		faktura = new Faktura(ut_dato, inn_dato, antallDager, (double)(Prisliste.utleigepris(bil.getGruppe())), 
 				fakturagebyr, (double)(Prisliste.utleigepris(bil.getGruppe())*antallDager+fakturagebyr), forfallsDato);
 	}
+	
+	
 
 
 	public UtleigeKontor getLeiested() {
@@ -130,6 +137,42 @@ public Reservasjon(UtleigeKontor leiested, UtleigeKontor retursted, LocalDateTim
 
 	public void setFaktura(Faktura faktura) {
 		this.faktura = faktura;
+	}
+
+
+
+	public double getKmFor() {
+		return kmFor;
+	}
+
+
+
+	public void setKmFor(double kmFor) {
+		this.kmFor = kmFor;
+	}
+
+
+
+	public double getKmEtter() {
+		return kmEtter;
+	}
+
+
+
+	public void setKmEtter(double kmEtter) {
+		this.kmEtter = kmEtter;
+	}
+
+
+
+	public static double getGebyr() {
+		return gebyr;
+	}
+
+
+
+	public static void setGebyr(double gebyr) {
+		Reservasjon.gebyr = gebyr;
 	}
 	
 

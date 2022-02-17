@@ -4,7 +4,7 @@ import java.util.List;
 
 public class BilutleigeSelskap {
 
-	private String navn;
+	private static String navn;
 	private int telefonnummer;
 	private Adresse adresse;
 	private List<UtleigeKontor> utleigekontor;
@@ -12,7 +12,7 @@ public class BilutleigeSelskap {
 	
 	public BilutleigeSelskap(String navn, int telefonnummer, Adresse adresse, List<UtleigeKontor> utleigekontor,
 			List<Kunde> kunder) {
-		this.navn = navn;
+		BilutleigeSelskap.navn = navn;
 		this.telefonnummer = telefonnummer;
 		this.adresse = adresse;
 		this.utleigekontor = utleigekontor;
@@ -29,12 +29,12 @@ public class BilutleigeSelskap {
 	}
 	
 	
-	public String getNavn() {
+	public static String getNavn() {
 		return navn;
 	}
 
-	public void setNavn(String navn) {
-		this.navn = navn;
+	public static void setNavn(String navn) {
+		BilutleigeSelskap.navn = navn;
 	}
 
 	public int getTelefonnummer() {

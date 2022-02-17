@@ -76,6 +76,12 @@ public class Bil {
 	public void setKm(double km) {
 		this.km = km;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Bil [merke=" + merke + ", modell=" + modell + ", farge=" + farge + "]";
+	}
 	
 	
 }
