@@ -42,7 +42,7 @@ public class Reservasjon {
 
 		Date forfallsDato = Timestamp.valueOf(inn_dato.plusDays(14));
 
-		faktura = new Faktura(ut_dato, inn_dato, antallDager, (double) (Prisliste.utleigepris(bil.getGruppe())),
+		faktura = new Faktura(ut_dato, inn_dato, antallDager, pris,
 				fakturagebyr, pris + fakturagebyr, forfallsDato);
 	}
 
