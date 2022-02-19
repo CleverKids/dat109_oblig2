@@ -11,18 +11,16 @@ public class UtleigeKontor {
 	private int kontonr;
 	private int telefonnummer;
 	private Adresse adresse;
-	private List<Bil> biler;
-	private List<Reservasjon> resavasjoner;
-	private int antBiler;
+	private List<Bil> biler = new ArrayList<Bil>();
+	private List<Reservasjon> resavasjoner = new ArrayList<Reservasjon>();
+	
 
-	public UtleigeKontor(int kontonr, int telefonnummer, Adresse adresse, List<Bil> biler,
-			List<Reservasjon> resavasjoner, int antBiler) {
+	public UtleigeKontor(Adresse adresse, int kontonr, int telefonnummer) {
 		this.kontonr = kontonr;
 		this.telefonnummer = telefonnummer;
 		this.adresse = adresse;
-		this.biler = biler;
-		this.resavasjoner = resavasjoner;
-		this.antBiler = antBiler;
+		
+		
 	}
 
 	public String visLedigeGrupper(UtleigeKontor retursted, LocalDateTime henteTid, int dager) {
@@ -62,9 +60,20 @@ public class UtleigeKontor {
 
 	public void leggTilBil(Bil bil) {
 		biler.add(bil);
-		antBiler++;
+		
 	}
-
+	
+	public void flyttBil(Bil bil, UtleigeKontor nytt) {
+		
+		nytt.leggTilBil(bil);
+		this.fjernBil(bil);
+	}
+	public void fjernBil(Bil bil) {
+		biler.remove(bil);
+	}
+	
+	
+	
 	public void reserver(Reservasjon res) {
 		resavasjoner.add(res);
 	}
@@ -109,13 +118,6 @@ public class UtleigeKontor {
 		this.resavasjoner = resavasjoner;
 	}
 
-	public int getAntBiler() {
-		return antBiler;
-	}
-
-	public void setAntBiler(int antBiler) {
-		this.antBiler = antBiler;
-	}
 
 	@Override
 	public String toString() {

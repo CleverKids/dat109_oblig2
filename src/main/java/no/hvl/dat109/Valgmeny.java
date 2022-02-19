@@ -29,14 +29,13 @@ public class Valgmeny {
 		JOptionPane.showMessageDialog(null, s);
 	}
 
-	int valgStart;
+	
 
 	public void start() {
-		valgStart = Integer.parseInt(
-				visValg("Velkommen til " + selskapet.getNavn() + "\n skriv 1 for Ã¥ fortsette eller 0 for Ã¥ avslutte"));
-	}
-
-	{
+		
+	int	valgStart = Integer.parseInt(
+				visValg("Velkommen til " + selskapet.getNavn() + "\n skriv 1 for å fortsette eller 0 for å avslutte"));
+	
 		switch (valgStart) {
 
 		case 0:
@@ -69,7 +68,7 @@ public class Valgmeny {
 
 			gruppen = Gruppe.valueOf(visValg("Ledige grupper ved :\n" + kontoret.toString() + "\n"
 					+ kontoret.visLedigeGrupper(retursted, henteTid, dager)
-					+ "\nSkriv inn den bilgruppen du vil leie"));
+					+ "\nSkriv inn den bilgruppen du vil leie").toUpperCase());
 
 			hentBil(Integer.parseInt(visValg("Ledige biler: \n" + kontoret.ledigeBilerInnenGruppe(gruppen) + "\n")));
 			

@@ -3,7 +3,7 @@ package no.hvl.dat109;
 public class Bil {
 
 	
-	private int regNr;
+	private String regNr;
 	private String merke;
 	private String modell;
 	private Farge farge;
@@ -12,7 +12,7 @@ public class Bil {
 	private double km;
 
 
-	public Bil (int regNr, String merke, String bilmodell, Farge farge, Gruppe Gruppe, boolean ledig, int km) {
+	public Bil (String regNr, String merke, String modell, Farge farge, Gruppe gruppe, boolean ledig, int km) {
 		this.regNr =  regNr;
 		this.merke = merke;
 		this.modell = modell;
@@ -23,12 +23,12 @@ public class Bil {
 	}
 
 
-	public int getRegNr() {
+	public String getRegNr() {
 		return regNr;
 	}
 
 
-	public void setRegNr(int regNr) {
+	public void setRegNr(String regNr) {
 		this.regNr = regNr;
 	}
 

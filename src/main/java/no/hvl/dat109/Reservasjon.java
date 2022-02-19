@@ -26,11 +26,12 @@ public class Reservasjon {
 		this.inn_dato = inn_dato;
 		this.antallDager = antallDager;
 		this.bil = bil;
-
+		
 		pris = (double) (Prisliste.utleigepris(bil.getGruppe()) * antallDager);
 
 		kmFor = bil.getKm();
 		bil.setLedig(false);
+		leiested.reserver(this);
 	}
 
 	public void leverTilbake() {
@@ -39,12 +40,16 @@ public class Reservasjon {
 		if (leiested.equals(retursted)) {
 			fakturagebyr = 0;
 		}
-
+		leiested.flyttBil(bil, retursted);
+		
+		
+		
 		Date forfallsDato = Timestamp.valueOf(inn_dato.plusDays(14));
 
 		faktura = new Faktura(ut_dato, inn_dato, antallDager, pris,
 				fakturagebyr, pris + fakturagebyr, forfallsDato);
 	}
+	
 
 	public UtleigeKontor getLeiested() {
 		return leiested;
