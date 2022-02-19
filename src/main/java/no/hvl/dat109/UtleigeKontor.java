@@ -8,25 +8,25 @@ import java.util.Set;
 
 public class UtleigeKontor {
 
-	private int kontonr;
+	private int kontornr;
 	private int telefonnummer;
 	private Adresse adresse;
 	private List<Bil> biler = new ArrayList<Bil>();
-	private List<Reservasjon> resavasjoner = new ArrayList<Reservasjon>();
-	
+	private List<Reservasjon> reservasjoner = new ArrayList<Reservasjon>();
 
-	public UtleigeKontor(Adresse adresse, int kontonr, int telefonnummer) {
-		this.kontonr = kontonr;
+	public UtleigeKontor(Adresse adresse, int kontornr, int telefonnummer) {
+		String.format("%04d", kontornr);
+
+		this.kontornr = kontornr;
 		this.telefonnummer = telefonnummer;
 		this.adresse = adresse;
-		
-		
+
 	}
 
 	public String visLedigeGrupper(UtleigeKontor retursted, LocalDateTime henteTid, int dager) {
 		StringBuilder sb = new StringBuilder();
 
-		Set<Gruppe> ledigeGrupper = new HashSet<>();
+		Set<Gruppe> ledigeGrupper = new HashSet<Gruppe>();
 
 		for (Gruppe g : Gruppe.values()) {
 			for (Bil b : biler) {
@@ -45,45 +45,48 @@ public class UtleigeKontor {
 
 	public String ledigeBilerInnenGruppe(Gruppe g) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		int i = 1;
-		
-		for(Bil b : biler) {
-			if(b.getGruppe().equals(g) && b.isLedig()) {
+
+		for (Bil b : biler) {
+			if (b.getGruppe().equals(g) && b.isLedig()) {
 				sb.append(i).append(": ").append(b).append("\n");
 				i++;
 			}
 		}
-		
+
 		return sb.toString();
 	}
 
 	public void leggTilBil(Bil bil) {
 		biler.add(bil);
-		
+
 	}
-	
+
 	public void flyttBil(Bil bil, UtleigeKontor nytt) {
-		
+
 		nytt.leggTilBil(bil);
 		this.fjernBil(bil);
 	}
+
 	public void fjernBil(Bil bil) {
 		biler.remove(bil);
 	}
-	
-	
-	
+
 	public void reserver(Reservasjon res) {
-		resavasjoner.add(res);
+		reservasjoner.add(res);
 	}
 
-	public int getKontonr() {
-		return kontonr;
+	public boolean slettReservasjon(Reservasjon res) {
+		return reservasjoner.remove(res);
 	}
 
-	public void setKontonr(int kontonr) {
-		this.kontonr = kontonr;
+	public int getKontornr() {
+		return kontornr;
+	}
+
+	public void setKontornr(int kontornr) {
+		this.kontornr = kontornr;
 	}
 
 	public int getTelefonnummer() {
@@ -111,17 +114,29 @@ public class UtleigeKontor {
 	}
 
 	public List<Reservasjon> getResavasjoner() {
-		return resavasjoner;
+		return reservasjoner;
 	}
 
 	public void setResavasjoner(List<Reservasjon> resavasjoner) {
-		this.resavasjoner = resavasjoner;
+		this.reservasjoner = resavasjoner;
 	}
 
+	public Reservasjon hentReservasjon(int resnr) {
+		
+		Reservasjon reservasjon = null;
+		
+		for (Reservasjon res : reservasjoner) {
+			if (res.getReservasjonsnr() == resnr) {
+				reservasjon = res;
+			}
+		}
+		return reservasjon;
+
+	}
 
 	@Override
 	public String toString() {
-		return "Kontonr:" + kontonr + ", nr:" + telefonnummer + ", adr:" + adresse.getPoststed();
+		return "Kontonr:" + kontornr + ", nr:" + telefonnummer + ", adr:" + adresse.getPoststed();
 	}
 
 }

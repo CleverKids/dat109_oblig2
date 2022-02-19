@@ -1,11 +1,15 @@
 package no.hvl.dat109;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.sql.Timestamp;
 
 public class Reservasjon {
+	private static double gebyr = 500;
+	private static int reservasjonsGenerator = 0;
 
+	private int reservasjonsnr;
 	private UtleigeKontor leiested, retursted;
 	private LocalDateTime ut_dato, inn_dato;
 	private int antallDager;
@@ -15,41 +19,54 @@ public class Reservasjon {
 	private Faktura faktura;
 	private double kmFor;
 	private double kmEtter;
+	private double fakturagebyr;
+	private Kunde kunde;
 
-	private static double gebyr = 500;
+	public Reservasjon(UtleigeKontor leiested, UtleigeKontor retursted, LocalDateTime ut_dato_tid, LocalTime inn_tid,
+			int antallDager, Bil bil,Kunde kunde) {
 
-	public Reservasjon(UtleigeKontor leiested, UtleigeKontor retursted, LocalDateTime ut_dato, LocalDateTime inn_dato,
-			int antallDager, Bil bil) {
 		this.leiested = leiested;
+
+		reservasjonsnr = Integer
+				.parseInt(String.valueOf(leiested.getKontornr()) + String.valueOf(generateReservasjonsNr()));
+
 		this.retursted = retursted;
-		this.ut_dato = ut_dato;
-		this.inn_dato = inn_dato;
+		this.ut_dato = ut_dato_tid;
+		this.inn_dato = ut_dato_tid.withHour(inn_tid.getHour()).withMinute(inn_tid.getMinute()).plusDays(antallDager);
 		this.antallDager = antallDager;
 		this.bil = bil;
-		
+		this.setKunde(kunde); 
+
 		pris = (double) (Prisliste.utleigepris(bil.getGruppe()) * antallDager);
 
-		kmFor = bil.getKm();
+		if (leiested.equals(retursted)) {
+			fakturagebyr = 0;
+		} else {
+			fakturagebyr = gebyr;
+		}
+
 		bil.setLedig(false);
 		leiested.reserver(this);
 	}
 
+	public void hentBil(long kredittkort) {
+		kmFor = bil.getKm();
+		this.kredittkort = kredittkort;
+	}
+
 	public void leverTilbake() {
 		kmEtter = bil.getKm();
-		double fakturagebyr = gebyr;
-		if (leiested.equals(retursted)) {
-			fakturagebyr = 0;
+
+		if (!leiested.equals(retursted)) {
+			leiested.flyttBil(bil, retursted);
 		}
-		leiested.flyttBil(bil, retursted);
 		
-		
-		
+		bil.setLedig(true);
+
 		Date forfallsDato = Timestamp.valueOf(inn_dato.plusDays(14));
 
-		faktura = new Faktura(ut_dato, inn_dato, antallDager, pris,
-				fakturagebyr, pris + fakturagebyr, forfallsDato);
+		faktura = new Faktura(ut_dato, inn_dato, antallDager, pris, fakturagebyr, pris + fakturagebyr, forfallsDato);
 	}
-	
 
 	public UtleigeKontor getLeiested() {
 		return leiested;
@@ -145,6 +162,39 @@ public class Reservasjon {
 
 	public static void setGebyr(double gebyr) {
 		Reservasjon.gebyr = gebyr;
+	}
+
+	private int generateReservasjonsNr() {
+		return reservasjonsGenerator++;
+
+	}
+
+	@Override
+	public String toString() {
+		return "Reservasjon\n [reservasjonsnr=" + reservasjonsnr +"\n kunde="+ kunde.getEtternavn() +"\nleiested=" + leiested.getAdresse().getPoststed()
+				+ "\n retursted=" + retursted.getAdresse().getPoststed() + "\n hentedato=" + ut_dato + "\n tilbakedato="
+				+ inn_dato + "\n antallDager=" + antallDager + "\n bil=" + bil + "\n pris=" + (pris + fakturagebyr)
+				+ "kr]";
+	}
+
+	public int getReservasjonsnr() {
+		return reservasjonsnr;
+	}
+
+	public double getFakturagebyr() {
+		return fakturagebyr;
+	}
+
+	public void setFakturagebyr(double fakturagebyr) {
+		this.fakturagebyr = fakturagebyr;
+	}
+
+	public Kunde getKunde() {
+		return kunde;
+	}
+
+	public void setKunde(Kunde kunde) {
+		this.kunde = kunde;
 	}
 
 }

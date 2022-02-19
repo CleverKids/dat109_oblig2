@@ -1,7 +1,12 @@
 package no.hvl.dat109;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 
 
@@ -13,7 +18,7 @@ public class BilutleigeSelskap {
 		
 		
 		Adresse adr = new Adresse("1B", 6823, "Sandane" );
-		Adresse adr1 = new Adresse("246", 6812, "Førde");
+		Adresse adr1 = new Adresse("246", 6812, "Fï¿½rde");
 		Adresse adr2 = new Adresse("66A", 5063, "Bergen");
 		Adresse adrFirma = new Adresse("28", 5063, "Bergen");
 		Adresse adrKunde = new Adresse("1B", 6823, "Sandane" );
@@ -25,15 +30,14 @@ public class BilutleigeSelskap {
 		Bil bil5 = new Bil("UA.33478", "Toyota", "Proace", Farge.GRAA, Gruppe.D, true, 4000);
 		Bil bil6 = new Bil("TV.34559", "Audi", "R8", Farge.KVIT, Gruppe.A, true, 1000);
 		
-		UtleigeKontor ukontor = new UtleigeKontor(adr,1,89774553);
-		UtleigeKontor ukontor1 = new UtleigeKontor(adr1,2,45673443);
-		UtleigeKontor ukontor2 = new UtleigeKontor(adr2,3,78879906);
+		UtleigeKontor ukontor = new UtleigeKontor(adr,1001,89774553);
+		UtleigeKontor ukontor1 = new UtleigeKontor(adr1,2001,45673443);
+		UtleigeKontor ukontor2 = new UtleigeKontor(adr2,3001,78879906);
 		
 		List<UtleigeKontor> testKontorListe = new ArrayList<UtleigeKontor>();
-		List<UtleigeKontor> testKontorListe2 = new ArrayList<UtleigeKontor>();
 		testKontorListe.add(ukontor1);
 		testKontorListe.add(ukontor2);
-		testKontorListe2.add(ukontor);
+		testKontorListe.add(ukontor);
 		
 		ukontor.leggTilBil(bil1);
 		ukontor.leggTilBil(bil2);
@@ -46,6 +50,21 @@ public class BilutleigeSelskap {
 
         
 		BilutleigeSelskap besteSelskap = new BilutleigeSelskap("besteSelskap", 12345678,adrFirma,testKontorListe);
+		
+
+		
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+
+			String str1 = "2022-03-01 10:00";
+			String str2 = "10:00";
+
+			LocalDateTime fast = LocalDateTime.parse(str1, formatter);
+			LocalTime slow = LocalTime.parse(str2);
+
+		
+		Reservasjon res = new Reservasjon(ukontor, ukontor1, fast, slow, 5, bil1,testkunde);
+		System.out.print(res.toString());
 
 		Valgmeny meny = new Valgmeny(besteSelskap);
 		meny.start();
@@ -143,5 +162,19 @@ public class BilutleigeSelskap {
 	public List<UtleigeKontor> getUtleigekontor() {
 		return utleigekontor;
 	}
+	
+	public UtleigeKontor hentKontor(int knr) {
+
+		UtleigeKontor kontoret = null;
+		
+		for (UtleigeKontor uk : utleigekontor) {
+			if (Integer.compare(uk.getKontornr(), knr)  == 0) {
+				kontoret = uk;
+			}
+		}
+		return kontoret;
+
+	}
+
 
 }
