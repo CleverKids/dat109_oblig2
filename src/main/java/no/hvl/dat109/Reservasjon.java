@@ -33,7 +33,7 @@ public class Reservasjon {
 		bil.setLedig(false);
 	}
 
-	public void fakturer() {
+	public void leverTilbake() {
 		kmEtter = bil.getKm();
 		double fakturagebyr = gebyr;
 		if (leiested.equals(retursted)) {

@@ -36,7 +36,6 @@ public class Valgmeny {
 				visValg("Velkommen til " + selskapet.getNavn() + "\n skriv 1 for å fortsette eller 0 for å avslutte"));
 	}
 
-	int valgKontor;
 	{
 		switch (valgStart) {
 
@@ -62,7 +61,7 @@ public class Valgmeny {
 			kontoret = selskapet.getUtleigekontor().get(n - 1);
 
 			int m = Integer.parseInt(visValg("Velg et retursted\n" + selskapet.getUtleigekontorString()));
-			retursted = selskapet.getUtleigekontor().get(n - 1);
+			retursted = selskapet.getUtleigekontor().get(m - 1);
 
 			henteTid = beOmTid("hentetid");
 
