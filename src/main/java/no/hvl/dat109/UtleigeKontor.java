@@ -25,7 +25,7 @@ public class UtleigeKontor {
 		this.antBiler = antBiler;
 	}
 
-	public String sok(UtleigeKontor retursted, LocalDateTime henteTid, int dager) {
+	public String visLedigeGrupper(UtleigeKontor retursted, LocalDateTime henteTid, int dager) {
 		StringBuilder sb = new StringBuilder();
 
 		Set<Gruppe> ledigeGrupper = new HashSet<>();
@@ -45,7 +45,7 @@ public class UtleigeKontor {
 		return sb.toString();
 	}
 
-	public String ledigeBilerGruppe(Gruppe g) {
+	public String ledigeBilerInnenGruppe(Gruppe g) {
 		StringBuilder sb = new StringBuilder();
 		
 		int i = 1;
@@ -115,6 +115,11 @@ public class UtleigeKontor {
 
 	public void setAntBiler(int antBiler) {
 		this.antBiler = antBiler;
+	}
+
+	@Override
+	public String toString() {
+		return "Kontonr:" + kontonr + ", nr:" + telefonnummer + ", adr:" + adresse.getPoststed();
 	}
 
 }

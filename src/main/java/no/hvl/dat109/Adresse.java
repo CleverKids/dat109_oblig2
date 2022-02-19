@@ -5,6 +5,9 @@ public class Adresse {
 	private int postNr;
 	private String poststed;
 	
+	public Adresse() {
+	}
+
 	public Adresse(String gate, int postNr, String poststed) {
 		this.gate = gate;
 		this.postNr = postNr;

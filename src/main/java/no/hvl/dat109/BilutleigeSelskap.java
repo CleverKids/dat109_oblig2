@@ -9,7 +9,7 @@ public class BilutleigeSelskap {
 	private Adresse adresse;
 	private List<UtleigeKontor> utleigekontor;
 	private List<Kunde> kunder;
-	
+
 	public BilutleigeSelskap(String navn, int telefonnummer, Adresse adresse, List<UtleigeKontor> utleigekontor,
 			List<Kunde> kunder) {
 		BilutleigeSelskap.navn = navn;
@@ -19,17 +19,15 @@ public class BilutleigeSelskap {
 		this.kunder = kunder;
 	}
 
-	
 	public void leggKontorTilListe(UtleigeKontor nyKontor) {
 		utleigekontor.add(nyKontor);
 	}
-	
+
 	public void leggTilKunde(Kunde k) {
 		kunder.add(k);
 	}
-	
-	
-	public static String getNavn() {
+
+	public String getNavn() {
 		return navn;
 	}
 
@@ -52,9 +50,20 @@ public class BilutleigeSelskap {
 	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
 	}
+	
 
-	public List<UtleigeKontor> getUtleigekontor() {
-		return utleigekontor;
+	public String getUtleigekontorString() {
+
+		StringBuilder sb = new StringBuilder();
+
+		int n = 1;
+		for (UtleigeKontor utlk : utleigekontor) {
+			sb.append(n).append(": ").append(utlk).append("\n");
+			n++;
+		}
+		
+
+		return sb.toString();
 	}
 
 	public void setUtleigekontor(List<UtleigeKontor> utleigekontor) {
@@ -68,6 +77,9 @@ public class BilutleigeSelskap {
 	public void setKunde(List<Kunde> kunde) {
 		this.kunder = kunde;
 	}
-	
-	
+
+	public List<UtleigeKontor> getUtleigekontor() {
+		return utleigekontor;
+	}
+
 }

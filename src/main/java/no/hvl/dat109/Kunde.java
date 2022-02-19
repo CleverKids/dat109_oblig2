@@ -4,8 +4,14 @@ public class Kunde {
 	
 	private String fornavn;
 	private String etternavn;
+	
+	
+
 	private Adresse adresse;
 	private int telefonnummer;
+	
+	public Kunde() {
+	}
 	
 	public Kunde(String fornavn, String etternavn, Adresse adresse, int telefonnummer) {
 		this.fornavn = fornavn;
