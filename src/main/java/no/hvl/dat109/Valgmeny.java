@@ -24,96 +24,96 @@ public class Valgmeny {
 	}
 
 	public void start() {
-/*
-		int valgStart = Integer.parseInt(visValg("Velkommen til " + selskapet.getNavn()
-				+ "\n skriv 0 for å avslutte, 1 for reservasjon, 2 for å hente bil eller 3 for å lever tilbake bil"));
+		/*
+		 * int valgStart = Integer.parseInt(visValg("Velkommen til " +
+		 * selskapet.getNavn() +
+		 * "\n skriv 0 for å avslutte, 1 for reservasjon, 2 for å hente bil eller 3 for å lever tilbake bil"
+		 * ));
+		 * 
+		 * switch (valgStart) {
+		 * 
+		 * case 0: visMelding("Velkommen tilbake neste gang :("); break;
+		 * 
+		 * case 1:
+		 */
+		Kunde kunde;
+		UtleigeKontor kontoret;
+		UtleigeKontor retursted;
+		LocalDateTime henteTid;
+		LocalTime leveringsTid;
+		int dager;
+		Gruppe gruppen;
+		Bil bilen;
+		Reservasjon reservasjonen;
 
-		switch (valgStart) {
+		String fornavn = visValg("Oppgi fornavn");
+		String etternavn = visValg("Oppgi etternavn");
+		int nr = Integer.parseInt(visValg("Oppgi telefonnr."));
 
-		case 0:
-			visMelding("Velkommen tilbake neste gang :(");
-			break;
+		Adresse adr = new Adresse();
+		adr.setGate(visValg("Oppgi gatenavn"));
+		adr.setPostNr(Integer.parseInt(visValg("Oppgi postnr.")));
+		adr.setPoststed(visValg("Oppgi poststed"));
 
-		case 1:
-*/
-			Kunde kunde;
-			UtleigeKontor kontoret;
-			UtleigeKontor retursted;
-			LocalDateTime henteTid;
-			LocalTime leveringsTid;
-			int dager;
-			Gruppe gruppen;
-			Bil bilen;
-			Reservasjon reservasjonen;
+		kunde = new Kunde(fornavn, etternavn, adr, nr);
 
-			String fornavn = visValg("Oppgi fornavn");
-			String etternavn = visValg("Oppgi etternavn");
-			int nr = Integer.parseInt(visValg("Oppgi telefonnr."));
+		int n = Integer.parseInt(visValg("Velg et kontor\n" + selskapet.getUtleigekontorString()));
+		kontoret = selskapet.getUtleigekontor().get(n - 1);
 
-			Adresse adr = new Adresse();
-			adr.setGate(visValg("Oppgi gatenavn"));
-			adr.setPostNr(Integer.parseInt(visValg("Oppgi postnr.")));
-			adr.setPoststed(visValg("Oppgi poststed"));
-			
-			kunde = new Kunde(fornavn, etternavn, adr, nr);
+		int m = Integer.parseInt(visValg("Velg et retursted\n" + selskapet.getUtleigekontorString()));
+		retursted = selskapet.getUtleigekontor().get(m - 1);
 
-			int n = Integer.parseInt(visValg("Velg et kontor\n" + selskapet.getUtleigekontorString()));
-			kontoret = selskapet.getUtleigekontor().get(n - 1);
+		henteTid = beOmTid("hentetid");
 
-			int m = Integer.parseInt(visValg("Velg et retursted\n" + selskapet.getUtleigekontorString()));
-			retursted = selskapet.getUtleigekontor().get(m - 1);
+		dager = Integer.parseInt(visValg("Skriv antall dager du vil leie"));
 
-			henteTid = beOmTid("hentetid");
+		gruppen = Gruppe.valueOf(visValg("Ledige grupper ved :\n" + kontoret.toString() + "\n"
+				+ kontoret.visLedigeGrupper(retursted, henteTid, dager) + "\nSkriv inn den bilgruppen du vil leie")
+						.toUpperCase());
 
-			dager = Integer.parseInt(visValg("Skriv antall dager du vil leie"));
+		bilen = kontoret.getBiler().get(
+				Integer.parseInt(visValg("Ledige biler: \n" + kontoret.ledigeBilerInnenGruppe(gruppen) + "\n")) - 1);
 
-			gruppen = Gruppe.valueOf(visValg("Ledige grupper ved :\n" + kontoret.toString() + "\n"
-					+ kontoret.visLedigeGrupper(retursted, henteTid, dager) + "\nSkriv inn den bilgruppen du vil leie")
-							.toUpperCase());
+		leveringsTid = LocalTime.parse(visValg("Oppgi leveringstid(hh:mm)"));
 
-			bilen = kontoret.getBiler()
-					.get(Integer.parseInt(visValg("Ledige biler: \n" + kontoret.ledigeBilerInnenGruppe(gruppen) + "\n"))
-							- 1);
+		reservasjonen = new Reservasjon(kontoret, retursted, henteTid, leveringsTid, dager, bilen, kunde);
 
-			leveringsTid = LocalTime.parse(visValg("Oppgi leveringstid(hh:mm)"));
+		int bekreft = Integer
+				.parseInt(visValg("0 for avbryte bestilling eller 1 for å bekrefte\n" + reservasjonen.toString()));
 
-			reservasjonen = new Reservasjon(kontoret, retursted, henteTid, leveringsTid, dager, bilen, kunde);
-
-			int bekreft = Integer
-					.parseInt(visValg("0 for avbryte bestilling eller 1 for å bekrefte\n" + reservasjonen.toString()));
-
-			if (bekreft == 0) {
-				kontoret.slettReservasjon(reservasjonen);
-				visMelding("Bestilling slettet, velkommen tilbake neste gang :(");
+		if (bekreft == 0) {
+			visMelding("Bestilling slettet, velkommen tilbake neste gang :(");
 //				break;
 
-			} else {
-				visMelding(
-						"Bestilling bekreftet, håper du skrev ned all informasjon for du kommer ikke til å få bekreftelse på e-post");
+		} else {
+			reservasjonen.reserver();
+			visMelding(
+
+					"Bestilling bekreftet, håper du skrev ned all informasjon for du kommer ikke til å få bekreftelse på e-post");
 //				break;
-			}
+		}
 
 //		case 2:
-			int resnr = Integer.parseInt(visValg("Oppgi reservasjonsnr"));
+		int resnr = Integer.parseInt(visValg("Oppgi reservasjonsnr"));
 
-			String s = Integer.toString(resnr).substring(0, 4);
-			int knr = Integer.parseInt(s);
+		String s = Integer.toString(resnr).substring(0, 4);
+		int knr = Integer.parseInt(s);
 
-			UtleigeKontor kontor = selskapet.hentKontor(knr);
-			Reservasjon res = kontor.hentReservasjon(resnr);
+		UtleigeKontor kontor = selskapet.hentKontor(knr);
+		Reservasjon res = kontor.hentReservasjon(resnr);
 
-			res.hentBil(Long.parseLong(visValg("Oppgi kredittkortnr")));
+		res.hentBil(Long.parseLong(visValg("Oppgi kredittkortnr")));
 
-			visMelding("Kredittkort lagt til $$$");
+		visMelding("Kredittkort lagt til $$$");
 
 //			break;
 
 //		case 3:
-			int resnum = Integer.parseInt(visValg("Oppgi reservasjonsnr"));
+		int resnum = Integer.parseInt(visValg("Oppgi reservasjonsnr"));
 
-			Reservasjon resrv = selskapet.hentReservasjon(resnum);
-			resrv.leverTilbake();
-			visMelding(resrv.getFaktura().toString());
+		Reservasjon resrv = selskapet.hentReservasjon(resnum);
+		resrv.leverTilbake();
+		visMelding(resrv.getFaktura().toString());
 
 //			break;
 //		}

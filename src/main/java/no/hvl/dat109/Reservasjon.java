@@ -46,6 +46,9 @@ public class Reservasjon {
 		}
 
 		bil.setLedig(false);
+	}
+	
+	public void reserver() {
 		leiested.reserver(this);
 	}
 
