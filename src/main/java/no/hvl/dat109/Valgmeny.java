@@ -96,12 +96,7 @@ public class Valgmeny {
 //		case 2:
 		int resnr = Integer.parseInt(visValg("Oppgi reservasjonsnr"));
 
-		String s = Integer.toString(resnr).substring(0, 4);
-		int knr = Integer.parseInt(s);
-
-		UtleigeKontor kontor = selskapet.hentKontor(knr);
-		Reservasjon res = kontor.hentReservasjon(resnr);
-
+		Reservasjon res = selskapet.hentReservasjon(resnr);
 		res.hentBil(Long.parseLong(visValg("Oppgi kredittkortnr")));
 
 		visMelding("Kredittkort lagt til $$$");
@@ -113,6 +108,7 @@ public class Valgmeny {
 
 		Reservasjon resrv = selskapet.hentReservasjon(resnum);
 		resrv.leverTilbake();
+		
 		visMelding(resrv.getFaktura().toString());
 
 //			break;
