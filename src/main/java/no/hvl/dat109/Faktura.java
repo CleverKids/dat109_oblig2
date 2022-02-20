@@ -1,5 +1,6 @@
 package no.hvl.dat109;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -11,16 +12,17 @@ public class Faktura {
 	private double gebyr;
 	private double totalPris;
 	private Date forfallsDato;
+	public static int forfallsdager = 14;
 	
 	public Faktura(LocalDateTime ut_dato, LocalDateTime inn_dato, int antalDager, double leiePris, double gebyr,
-			double totalPris, Date forfallsDato) {
+			double totalPris) {
 		this.ut_dato = ut_dato;
 		this.inn_dato = inn_dato;
 		this.antallDager = antalDager;
 		this.leiePris = leiePris;
 		this.gebyr = gebyr;
 		this.totalPris = totalPris;
-		this.forfallsDato = forfallsDato;
+		this.forfallsDato = Timestamp.valueOf(inn_dato.plusDays(forfallsdager));
 	}
 
 	

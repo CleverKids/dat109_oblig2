@@ -46,17 +46,16 @@ public class Valgmeny {
 			Bil bilen;
 			Reservasjon reservasjonen;
 
-			kunde = new Kunde();
-			kunde.setFornavn(visValg("Oppgi fornavn"));
-			kunde.setEtternavn(visValg("Oppgi etternavn"));
-			kunde.setFornavn(visValg("Oppgi telefonnr."));
+			String fornavn = visValg("Oppgi fornavn");
+			String etternavn = visValg("Oppgi etternavn");
+			int nr = Integer.parseInt(visValg("Oppgi telefonnr."));
 
 			Adresse adr = new Adresse();
 			adr.setGate(visValg("Oppgi gatenavn"));
 			adr.setPostNr(Integer.parseInt(visValg("Oppgi postnr.")));
 			adr.setPoststed(visValg("Oppgi poststed"));
-
-			kunde.setAdresse(adr);
+			
+			kunde = new Kunde(fornavn, etternavn, adr, nr);
 
 			int n = Integer.parseInt(visValg("Velg et selskap\n" + selskapet.getUtleigekontorString()));
 			kontoret = selskapet.getUtleigekontor().get(n - 1);
@@ -78,7 +77,7 @@ public class Valgmeny {
 
 			leveringsTid = LocalTime.parse(visValg("Oppgi leveringstid(hh:mm)"));
 
-			reservasjonen = new Reservasjon(kontoret, retursted, henteTid, leveringsTid, dager, bilen,kunde);
+			reservasjonen = new Reservasjon(kontoret, retursted, henteTid, leveringsTid, dager, bilen, kunde);
 
 			int bekreft = Integer
 					.parseInt(visValg("0 for avbryte bestilling eller 1 for å bekrefte\n" + reservasjonen.toString()));
@@ -104,7 +103,7 @@ public class Valgmeny {
 			Reservasjon res = kontor.hentReservasjon(resnr);
 
 			res.hentBil(Long.parseLong(visValg("Oppgi kredittkortnr")));
-			
+
 			visMelding("Kredittkort lagt til $$$");
 
 			break;
@@ -126,6 +125,5 @@ public class Valgmeny {
 		return LocalDateTime.parse(str, formatter);
 
 	}
-
 
 }
