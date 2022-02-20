@@ -44,11 +44,10 @@ public class Reservasjon {
 		} else {
 			fakturagebyr = gebyr;
 		}
-
-		bil.setLedig(false);
 	}
 	
 	public void reserver() {
+		bil.setLedig(false);
 		leiested.reserver(this);
 	}
 
