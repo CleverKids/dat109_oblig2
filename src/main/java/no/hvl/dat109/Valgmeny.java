@@ -57,7 +57,7 @@ public class Valgmeny {
 			
 			kunde = new Kunde(fornavn, etternavn, adr, nr);
 
-			int n = Integer.parseInt(visValg("Velg et selskap\n" + selskapet.getUtleigekontorString()));
+			int n = Integer.parseInt(visValg("Velg et kontor\n" + selskapet.getUtleigekontorString()));
 			kontoret = selskapet.getUtleigekontor().get(n - 1);
 
 			int m = Integer.parseInt(visValg("Velg et retursted\n" + selskapet.getUtleigekontorString()));
