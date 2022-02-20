@@ -18,7 +18,7 @@ public class BilutleigeSelskap {
 		
 		
 		Adresse adr = new Adresse("1B", 6823, "Sandane" );
-		Adresse adr1 = new Adresse("246", 6812, "F�rde");
+		Adresse adr1 = new Adresse("246", 6812, "Førde");
 		Adresse adr2 = new Adresse("66A", 5063, "Bergen");
 		Adresse adrFirma = new Adresse("28", 5063, "Bergen");
 		Adresse adrKunde = new Adresse("1B", 6823, "Sandane" );
@@ -98,6 +98,16 @@ public class BilutleigeSelskap {
 		this.adresse = adresse;
 		this.utleigekontor = utleigekontor;
 		
+	}
+	
+	public Reservasjon hentReservasjon(int resnr ) {
+
+		String s = Integer.toString(resnr).substring(0, 4);
+		int knr = Integer.parseInt(s);
+
+		UtleigeKontor kontor = hentKontor(knr);
+		Reservasjon res = kontor.hentReservasjon(resnr);
+		return res;
 	}
 
 	public void leggKontorTilListe(UtleigeKontor nyKontor) {

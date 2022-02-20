@@ -24,7 +24,7 @@ public class Valgmeny {
 	}
 
 	public void start() {
-
+/*
 		int valgStart = Integer.parseInt(visValg("Velkommen til " + selskapet.getNavn()
 				+ "\n skriv 0 for å avslutte, 1 for reservasjon, 2 for å hente bil eller 3 for å lever tilbake bil"));
 
@@ -35,7 +35,7 @@ public class Valgmeny {
 			break;
 
 		case 1:
-
+*/
 			Kunde kunde;
 			UtleigeKontor kontoret;
 			UtleigeKontor retursted;
@@ -85,15 +85,15 @@ public class Valgmeny {
 			if (bekreft == 0) {
 				kontoret.slettReservasjon(reservasjonen);
 				visMelding("Bestilling slettet, velkommen tilbake neste gang :(");
-				break;
+//				break;
 
 			} else {
 				visMelding(
 						"Bestilling bekreftet, håper du skrev ned all informasjon for du kommer ikke til å få bekreftelse på e-post");
-				break;
+//				break;
 			}
 
-		case 2:
+//		case 2:
 			int resnr = Integer.parseInt(visValg("Oppgi reservasjonsnr"));
 
 			String s = Integer.toString(resnr).substring(0, 4);
@@ -106,12 +106,17 @@ public class Valgmeny {
 
 			visMelding("Kredittkort lagt til $$$");
 
-			break;
+//			break;
 
-		case 3:
+//		case 3:
+			int resnum = Integer.parseInt(visValg("Oppgi reservasjonsnr"));
 
-			break;
-		}
+			Reservasjon resrv = selskapet.hentReservasjon(resnum);
+			resrv.leverTilbake();
+			visMelding(resrv.getFaktura().toString());
+
+//			break;
+//		}
 	}
 
 	public LocalDateTime beOmTid(String s) {

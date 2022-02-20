@@ -84,6 +84,16 @@ public class Faktura {
 	public void setForfallsDato(Date forfallsDato) {
 		this.forfallsDato = forfallsDato;
 	}
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "Faktura [ut_dato=" + ut_dato + ", inn_dato=" + inn_dato + ", antallDager=" + antallDager + ", leiePris="
+				+ leiePris + ", gebyr=" + gebyr + ", totalPris=" + totalPris + ", forfallsDato=" + forfallsDato + "]\n";
+	}
 	
 	
 	
