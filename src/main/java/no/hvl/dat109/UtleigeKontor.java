@@ -122,9 +122,9 @@ public class UtleigeKontor {
 	}
 
 	public Reservasjon hentReservasjon(int resnr) {
-		
+
 		Reservasjon reservasjon = null;
-		
+
 		for (Reservasjon res : reservasjoner) {
 			if (res.getReservasjonsnr() == resnr) {
 				reservasjon = res;

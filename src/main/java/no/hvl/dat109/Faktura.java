@@ -13,7 +13,7 @@ public class Faktura {
 	private double totalPris;
 	private Date forfallsDato;
 	public static int forfallsdager = 14;
-	
+
 	public Faktura(LocalDateTime ut_dato, LocalDateTime inn_dato, int antalDager, double leiePris, double gebyr,
 			double totalPris) {
 		this.ut_dato = ut_dato;
@@ -25,10 +25,6 @@ public class Faktura {
 		this.forfallsDato = Timestamp.valueOf(inn_dato.plusDays(forfallsdager));
 	}
 
-	
-	
-	
-	
 	public LocalDateTime getUt_dato() {
 		return ut_dato;
 	}
@@ -85,18 +81,10 @@ public class Faktura {
 		this.forfallsDato = forfallsDato;
 	}
 
-
-
-
-
 	@Override
 	public String toString() {
 		return "Faktura [ut_dato=" + ut_dato + ", inn_dato=" + inn_dato + ", antallDager=" + antallDager + ", leiePris="
 				+ leiePris + ", gebyr=" + gebyr + ", totalPris=" + totalPris + ", forfallsDato=" + forfallsDato + "]\n";
 	}
-	
-	
-	
-	
-	
+
 }

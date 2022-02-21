@@ -4,7 +4,7 @@ public class Adresse {
 	private String gate;
 	private int postNr;
 	private String poststed;
-	
+
 	public Adresse() {
 	}
 

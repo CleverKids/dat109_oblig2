@@ -108,7 +108,7 @@ public class Valgmeny {
 
 		Reservasjon resrv = selskapet.hentReservasjon(resnum);
 		resrv.leverTilbake();
-		
+
 		visMelding(resrv.getFaktura().toString());
 
 //			break;

@@ -23,7 +23,7 @@ public class Reservasjon {
 	private Kunde kunde;
 
 	public Reservasjon(UtleigeKontor leiested, UtleigeKontor retursted, LocalDateTime ut_dato_tid, LocalTime inn_tid,
-			int antallDager, Bil bil,Kunde kunde) {
+			int antallDager, Bil bil, Kunde kunde) {
 
 		this.leiested = leiested;
 
@@ -35,7 +35,7 @@ public class Reservasjon {
 		this.inn_dato = ut_dato_tid.withHour(inn_tid.getHour()).withMinute(inn_tid.getMinute()).plusDays(antallDager);
 		this.antallDager = antallDager;
 		this.bil = bil;
-		this.setKunde(kunde); 
+		this.setKunde(kunde);
 
 		pris = (double) (Prisliste.utleigepris(bil.getGruppe()) * antallDager);
 
@@ -45,7 +45,7 @@ public class Reservasjon {
 			fakturagebyr = gebyr;
 		}
 	}
-	
+
 	public void reserver() {
 		bil.setLedig(false);
 		leiested.reserver(this);
@@ -62,9 +62,8 @@ public class Reservasjon {
 		if (!leiested.equals(retursted)) {
 			leiested.flyttBil(bil, retursted);
 		}
-		
-		bil.setLedig(true);
 
+		bil.setLedig(true);
 
 		faktura = new Faktura(ut_dato, inn_dato, antallDager, pris, fakturagebyr, pris + fakturagebyr);
 	}
@@ -172,10 +171,10 @@ public class Reservasjon {
 
 	@Override
 	public String toString() {
-		return "Reservasjon\n [reservasjonsnr=" + reservasjonsnr +"\n kunde="+ kunde.getEtternavn() +"\nleiested=" + leiested.getAdresse().getPoststed()
-				+ "\n retursted=" + retursted.getAdresse().getPoststed() + "\n hentedato=" + ut_dato + "\n tilbakedato="
-				+ inn_dato + "\n antallDager=" + antallDager + "\n bil=" + bil + "\n pris=" + (pris + fakturagebyr)
-				+ "kr]";
+		return "Reservasjon\n [reservasjonsnr=" + reservasjonsnr + "\n kunde=" + kunde.getEtternavn() + "\nleiested="
+				+ leiested.getAdresse().getPoststed() + "\n retursted=" + retursted.getAdresse().getPoststed()
+				+ "\n hentedato=" + ut_dato + "\n tilbakedato=" + inn_dato + "\n antallDager=" + antallDager + "\n bil="
+				+ bil + "\n pris=" + (pris + fakturagebyr) + "kr]";
 	}
 
 	public int getReservasjonsnr() {
